@@ -1,0 +1,10 @@
+<mat-toolbar>
+  <span [innerText]="be.title"></span>
+  <span class="my-spacer"></span>
+  <a mat-icon-button routerLink="/calculator" *ngIf="auth.$loginData | async">
+    <mat-icon>calculate</mat-icon>
+  </a>
+  <a mat-icon-button routerLink="/suggest" *ngIf="auth.$loginData | async">
+    <mat-icon>settings_suggest</mat-icon>
+  </a>
+</mat-toolbar>

@@ -1,0 +1,30 @@
+<div class="welcome">
+  <mat-card class="my-card">
+    <mat-card-header>
+      <div mat-card-avatar class="header-image"></div>
+      <mat-card-title [innerText]="beService.title"></mat-card-title>
+      <mat-card-subtitle>Calculator and suggester</mat-card-subtitle>
+    </mat-card-header>
+    <img
+      mat-card-image
+      src="https://askastrology.com/wp-content/uploads/2021/05/numerology-768x512.jpg"
+      alt="Photo of a Numerology logo"
+    />
+    <mat-card-content>
+      <p>
+        Numerology is the pseudoscientific belief in a divine or mystical
+        relationship between a number and one or more coinciding events. It is
+        also the study of the numerical value of the letters in words, names,
+        and ideas. It is often associated with the paranormal, alongside
+        astrology and similar to divinatory arts. Calculate your numbers or Get
+        suggestions for your comapny name.
+      </p>
+    </mat-card-content>
+    <mat-card-actions>
+      <button mat-raised-button color="primary" (click)="auth.signIn()">
+        Begin
+      </button>
+      <!-- <button mat-button (click)="auth.signOut()">Out</button> -->
+    </mat-card-actions>
+  </mat-card>
+</div>

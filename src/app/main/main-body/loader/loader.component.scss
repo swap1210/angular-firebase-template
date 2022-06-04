@@ -1,0 +1,15 @@
+.main {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+}
+.file-input {
+  display: none;
+}
+
+pre {
+  overflow-y: scroll;
+  height: 30em;
+  padding: 0em 2em;
+}

@@ -1,0 +1,39 @@
+.main {
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.sp-form {
+  display: flex;
+  justify-content: space-around;
+  width: 80%;
+  flex-wrap: wrap;
+  flex-direction: column;
+  row-gap: 2em;
+}
+fieldset {
+  border-radius: 1em;
+  display: flex;
+  max-width: 80%;
+  flex-wrap: wrap;
+  justify-content: center;
+  column-gap: 1.5em;
+  align-items: baseline;
+}
+.result {
+  display: flex;
+  flex-direction: column;
+  width: 90%;
+}
+
+.result-form {
+  display: flex;
+  justify-content: space-between;
+}
+table {
+  width: 100%;
+}
+.no-data-cell {
+  text-align: center;
+}

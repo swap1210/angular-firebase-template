@@ -1,0 +1,15 @@
+.my-card {
+  max-width: 400px;
+}
+
+.header-image {
+  background-image: url("https://www.centreofexcellence.com/media/cache/product_og_image/b0/0e/a7ae6d11deff8e4230b4425dcc9f.jpeg");
+  background-size: cover;
+}
+.welcome {
+  display: flex;
+  place-items: center;
+  height: 100%;
+  width: 100%;
+  justify-content: center;
+}
