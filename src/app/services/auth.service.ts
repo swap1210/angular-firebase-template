@@ -7,7 +7,6 @@ import {
 	AngularFirestoreDocument,
 } from '@angular/fire/compat/firestore';
 import { GoogleAuthProvider } from '@angular/fire/auth';
-import { Router } from '@angular/router';
 import { Observable, of, switchMap } from 'rxjs';
 import { Timestamp } from '@angular/fire/firestore';
 
@@ -18,8 +17,7 @@ export class AuthService {
 
 	constructor(
 		private afAuth: AngularFireAuth, // Inject Firebase auth service
-		private afs: AngularFirestore, // Inject Firestore service
-		private router: Router
+		private afs: AngularFirestore // Inject Firestore service
 	) {
 		this.user$ = this.afAuth.authState.pipe(
 			switchMap((usr) => {
@@ -27,10 +25,12 @@ export class AuthService {
 				if (usr) {
 					console.log(usr);
 					if (!usr.isAnonymous) {
-						//if it's end ur for w ur
+						//user is authenticated
+						console.log('anonymous', usr);
 						return this.afs.doc<User>(`users/${usr.uid}`).valueChanges();
 					} else {
 						console.log('Here at anonymous login stage');
+						if (this.user) this.user.Role = Role.Visitor;
 						return new Promise<User>((res, rej) => {
 							let ur: User = {
 								Role: Role.Visitor,
@@ -57,7 +57,6 @@ export class AuthService {
 		this.afAuth
 			.signInAnonymously()
 			.then(() => {
-				if (this.user) this.user.Role = Role.Visitor;
 				console.log('Anonymous sign in sucess');
 				//this.router.navigate(['calculator']);
 			})
@@ -93,9 +92,10 @@ export class AuthService {
 
 		userRef.get().subscribe({
 			next: (oldData) => {
-				const data = {};
+				this.user = { Role: Role.User };
 				if (oldData && user.uid === oldData.get('uid')) {
 					// sessionStorage.setItem('language', oldData.get('language'));
+					this.user = { Role: oldData.get('role') };
 					return userRef.set({ last_login: Timestamp.now() }, { merge: true });
 				} else {
 					//new user then create data entry in firestore
@@ -118,7 +118,6 @@ export class AuthService {
 	logout() {
 		this.user = undefined;
 		this.afAuth.signOut().then(() => {
-			// this.router.navigate(['']);
 			console.log('Sign out success');
 		});
 	}

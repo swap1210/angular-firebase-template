@@ -4,24 +4,25 @@ import { Role } from '../models/role';
 import { AuthService } from '../services/auth.service';
 
 @Component({
-  selector: 'app-login',
-  templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css']
+	selector: 'app-login',
+	templateUrl: './login.component.html',
+	styleUrls: ['./login.component.css'],
 })
 export class LoginComponent implements OnInit {
-  Role = Role;
+	Role = Role;
 
-  constructor(private router: Router, private authService: AuthService) { }
+	constructor(private router: Router, private authService: AuthService) {}
 
-  ngOnInit() {
-  }
+	ngOnInit() {
+		//if sucessful login
+	}
 
-  login(role: Role) {
-    this.authService.login(role);
-    this.router.navigate(['/']);
-  }  
+	login() {
+		//this.authService.login(role);
+		this.authService.googleSignin();
+	}
 
-  logout() {
-    this.authService.logout();
-  }
+	logout() {
+		this.authService.logout();
+	}
 }
