@@ -2,43 +2,45 @@ import { mkdir, writeFile } from 'fs';
 
 const targetPath1 = './src/environments/environment.ts';
 const targetPath2 = './src/environments/environment.prod.ts';
-let x = process.env['APIKEY'];
-x = x ? x : '';
+const projectId = 'swapnilpatel-projects';
+let apikey = process.env['APIKEY'];
+let prod_apikey = process.env['PROD_APIKEY'];
+let envVersion = '1.0';
 
 const envConfigFile1 = `export const environment = {
    production: false,
    instance: 'Development',
    firebase: {
-                "apiKey": '${x}',
-                "authDomain": 'temp-test-3.firebaseapp.com',
-                "projectId": 'temp-test-3',
+                "apiKey": '${apikey}',
+                "authDomain": '${projectId}.firebaseapp.com',
+                "projectId": '${projectId}',
               },
-    version: 1.3
+    version: '${envVersion}'
 };
 `;
 const envConfigFile2 = `export const environment = {
    production: true,
    instance: 'Production',
    firebase: {
-              "apiKey": '${x}',
-              "authDomain": 'temp-test-3.firebaseapp.com',
-              "projectId": 'temp-test-3',
+              "apiKey": '${prod_apikey ? prod_apikey : apikey}',
+              "authDomain": '${projectId}.firebaseapp.com',
+              "projectId": '${projectId}',
             },
-    version: 1.3
+    version: '${envVersion}'
 };
 `;
 mkdir('./src/environments/', (err) => {
-  if (err) {
-    return console.log(err);
-  }
+	if (err) {
+		return console.log(err);
+	}
 });
 writeFile(targetPath1, envConfigFile1, 'utf8', (err) => {
-  if (err) {
-    return console.log(err);
-  }
+	if (err) {
+		return console.log(err);
+	}
 });
 writeFile(targetPath2, envConfigFile2, 'utf8', (err) => {
-  if (err) {
-    return console.log(err);
-  }
+	if (err) {
+		return console.log(err);
+	}
 });

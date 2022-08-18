@@ -1,28 +1,41 @@
+import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { environment } from 'src/environments/environment';
 
-import { AngularFireModule } from '@angular/fire/compat';
 import { AppRoutingModule } from './app-routing.module';
-import { AppComponent } from './app.component';
-import { FirebaseOptions } from '@angular/fire/app';
-
-import { BackendService } from './services/backend.service';
-import { SharedModule } from './shared/shared.module';
-import { MainModule } from './main/main.module';
-import { NavHeaderComponent } from './main/nav-header/nav-header.component';
-import { NavFooterComponent } from './main/nav-footer/nav-footer.component';
+import { AppComponent } from './app/app.component';
+import { HomeComponent } from './home/home.component';
+import { ProfileComponent } from './profile/profile.component';
+import { NotFoundComponent } from './error/not-found/not-found.component';
+import { LoginComponent } from './login/login.component';
+import { UserRoleDirective } from './directives/user-role.directive';
+import { UserDirective } from './directives/user.directive';
 import { AuthService } from './services/auth.service';
+import { FooterComponent } from './app/footer/footer.component';
+import { HeaderComponent } from './app/header/header.component';
+import { AngularFireModule } from '@angular/fire/compat';
+import { environment } from 'src/environments/environment';
+import { FirebaseOptions } from '@angular/fire/app';
+import { CommonModule } from '@angular/common';
 
 @NgModule({
-  declarations: [AppComponent, NavHeaderComponent, NavFooterComponent],
-  imports: [
-    AppRoutingModule,
-    AngularFireModule.initializeApp(environment.firebase as FirebaseOptions),
-
-    SharedModule,
-    MainModule,
-  ],
-  providers: [BackendService, AuthService],
-  bootstrap: [AppComponent],
+	declarations: [
+		AppComponent,
+		HomeComponent,
+		ProfileComponent,
+		NotFoundComponent,
+		LoginComponent,
+		UserDirective,
+		UserRoleDirective,
+		FooterComponent,
+		HeaderComponent,
+	],
+	imports: [
+		BrowserModule,
+		AppRoutingModule,
+		AngularFireModule.initializeApp(environment.firebase as FirebaseOptions),
+	],
+	exports: [UserDirective, UserRoleDirective],
+	providers: [AuthService, CommonModule],
+	bootstrap: [AppComponent],
 })
 export class AppModule {}

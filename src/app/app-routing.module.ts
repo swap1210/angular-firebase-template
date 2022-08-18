@@ -1,35 +1,54 @@
 import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
-import { CalculateComponent } from './main/main-body/calculate/calculate.component';
-import { LoaderComponent } from './main/main-body/loader/loader.component';
-import { SuggestComponent } from './main/main-body/suggest/suggest.component';
-import { WelcomeComponent } from './main/welcome/welcome.component';
-import { AuthGuard } from './services/auth.guard';
+import { Routes, RouterModule } from '@angular/router';
+import { HomeComponent } from './home/home.component';
+import { ProfileComponent } from './profile/profile.component';
+import { NotFoundComponent } from './error/not-found/not-found.component';
+import { AuthGuard } from './app-routing.guard';
+import { AuthService } from './services/auth.service';
+import { LoginComponent } from './login/login.component';
+import { Role } from './models/role';
+import { CommonService } from './services/common.service';
 
 const routes: Routes = [
-  {
-    path: '',
-    component: WelcomeComponent,
-  },
-  {
-    path: 'calculator',
-    component: CalculateComponent,
-    canActivate: [AuthGuard],
-  },
-  {
-    path: 'suggest',
-    component: SuggestComponent,
-    canActivate: [AuthGuard],
-  },
-  {
-    path: 'loader',
-    component: LoaderComponent,
-    canActivate: [AuthGuard],
-  },
+	{
+		path: '',
+		children: [
+			{
+				path: '',
+				component: HomeComponent,
+			},
+
+			{
+				path: 'profile',
+				canActivate: [AuthGuard],
+				component: ProfileComponent,
+			},
+
+			{
+				path: 'login',
+				component: LoginComponent,
+			},
+		],
+	},
+	{
+		path: 'admin',
+		canLoad: [AuthGuard],
+		canActivate: [AuthGuard],
+		data: {
+			roles: [Role.Admin],
+		},
+		loadChildren: () =>
+			import('./admin/admin.module').then((m) => m.AdminModule),
+	},
+	{
+		path: '**',
+		component: NotFoundComponent,
+	},
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule],
+	imports: [RouterModule.forRoot(routes)],
+	exports: [RouterModule],
+	providers: [AuthGuard, AuthService, CommonService],
 })
 export class AppRoutingModule {}

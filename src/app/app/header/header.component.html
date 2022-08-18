@@ -1,0 +1,32 @@
+<header class="navbar navbar-expand navbar-dark bg-dark">
+	<ul class="navbar-nav mr-auto">
+		<li class="nav-item">
+			<a class="nav-link" [routerLink]="['/']">Home</a>
+		</li>
+
+		<!-- Authorized only -->
+		<li class="nav-item" *ngIf="isAuthorized">
+			<a class="nav-link" [routerLink]="['profile']">Profile</a>
+		</li>
+
+		<!-- Admin only -->
+		<li class="nav-item" *ngIf="isAdmin">
+			<a class="nav-link" [routerLink]="['admin', 'dashboard']">Dashboard</a>
+		</li>
+
+		<!-- Anonymous only -->
+		<li class="nav-item" *ngIf="!isAuthorized">
+			<a class="nav-link" [routerLink]="['login']">Login</a>
+		</li>
+
+		<!-- Authorized only -->
+		<li class="nav-item" *ngIf="isAuthorized">
+			<a class="nav-link" (click)="logout()">Logout</a>
+		</li>
+	</ul>
+
+	<span class="navbar-text">
+		<span class="badge badge-warning" *ngIf="isAuthorized">Authorized</span>
+		<span class="badge badge-danger" *ngIf="isAdmin">Admin</span>
+	</span>
+</header>

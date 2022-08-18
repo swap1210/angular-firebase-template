@@ -1,27 +1,35 @@
-# NumerologyCalculator
+# My Blank Template for Angular-Firebase scafold
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 13.2.6.
+> My blank template to start building up a new project in Angular+Firebase
 
-## Development server
+Just follow below instructions and a template with **routing-enabled** **routeguarded login checked** and **firebase secret safe** that you can safely commit on Github without a need to scrub it everytime for API keys.
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+## Notes:
 
-## Code scaffolding
+This project has pre-configured routing for authentication and some other basic information that I always use for all of my
+single page application. Just though it will be a good idea to develop it as a scafold so anyone can use it as a base for
+firebase linked projects.
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+No firestore element is accesible without an anonymous login to protect the data so you don't have to by-pass the rules for it
 
-## Build
+## Step 1 of 5
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+create environment variable by the name APIKEY and it's value with Firebase APIKEY (you can also define a seperate key for production). This variable will be used by "config.index.ts" file to generate the environment file will all the neccesary secret keys.
 
-## Running unit tests
+## To Run
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+```bash
+npm start
+```
 
-## Running end-to-end tests
+## To Build for Development
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+```bash
+npm build
+```
 
-## Further help
+## To Build for Production
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+```bash
+npm build-prod
+```
