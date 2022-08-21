@@ -30,14 +30,17 @@ export class UserRoleDirective implements OnInit {
 	ngOnInit() {
 		let hasAccess = false;
 
-		if (this.authService.isAuthorized() && this.userRoles) {
-			hasAccess = this.userRoles.some((r) => this.authService.hasRole(r));
-		}
-
-		if (hasAccess) {
-			this.viewContainer.createEmbeddedView(this.templateRef);
-		} else {
-			this.viewContainer.clear();
-		}
+		this.authService.user$.subscribe({
+			next: (ur) => {
+				if (!!ur && this.userRoles) {
+					hasAccess = this.userRoles.some((r) => r == ur.role);
+				}
+				if (hasAccess) {
+					this.viewContainer.createEmbeddedView(this.templateRef);
+				} else {
+					this.viewContainer.clear();
+				}
+			},
+		});
 	}
 }

@@ -6,19 +6,16 @@ import { AuthService } from '../services/auth.service';
 @Component({
 	selector: 'app-login',
 	templateUrl: './login.component.html',
-	styleUrls: ['./login.component.css'],
+	styleUrls: ['./login.component.scss'],
 })
 export class LoginComponent implements OnInit {
 	Role = Role;
 
 	constructor(private router: Router, private authService: AuthService) {}
 
-	ngOnInit() {
-		//if sucessful login
-	}
+	ngOnInit() {}
 
 	login() {
-		//this.authService.login(role);
 		this.authService.googleSignin();
 	}
 

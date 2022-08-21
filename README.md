@@ -12,6 +12,9 @@ firebase linked projects.
 
 No firestore element is accesible without an anonymous login to protect the data so you don't have to by-pass the rules for it
 
+Note: It strictly follows below standard steps, as this is not a generic guide to Auth-Guard in Angular:
+https://github.com/angular/angularfire/blob/master/docs/auth/router-guards.md
+
 ## Step 1 of 5
 
 create environment variable by the name APIKEY and it's value with Firebase APIKEY (you can also define a seperate key for production). This variable will be used by "config.index.ts" file to generate the environment file will all the neccesary secret keys.

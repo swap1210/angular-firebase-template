@@ -14,33 +14,30 @@ import { Role } from './models/role';
 export class AuthGuard implements CanActivate, CanLoad {
 	constructor(private router: Router, private authService: AuthService) {}
 
-	canActivate(
-		route: ActivatedRouteSnapshot
-	): Observable<boolean> | Promise<boolean> | boolean {
-		if (!this.authService.isAuthorized()) {
+	async canActivate(route: ActivatedRouteSnapshot): Promise<boolean> {
+		const user = await this.authService.getUser();
+		// console.log('user', user);
+		const loggedIn = !!user;
+		if (!loggedIn) {
 			this.router.navigate(['login']);
 			return false;
 		}
-
-		const roles = route.data['roles'] as Role[];
-		if (roles && !roles.some((r) => this.authService.hasRole(r))) {
-			this.router.navigate(['error', 'not-found']);
-			return false;
-		}
-
-		return true;
+		return loggedIn;
 	}
 
 	canLoad(route: Route): Observable<boolean> | Promise<boolean> | boolean {
-		if (!this.authService.isAuthorized()) {
-			return false;
-		}
-
-		const roles = route.data && (route.data['roles'] as Role[]);
-		if (roles && !roles.some((r) => this.authService.hasRole(r))) {
-			return false;
-		}
-
-		return true;
+		return this.authService
+			.getUser()
+			.then((v) => {
+				const roles = route.data && (route.data['roles'] as Role[]);
+				if (v && roles) {
+					return roles.includes(v.role || Role.Visitor);
+				} else {
+					return false;
+				}
+			})
+			.catch(() => {
+				return false;
+			});
 	}
 }

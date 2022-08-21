@@ -7,50 +7,52 @@ import {
 	AngularFirestoreDocument,
 } from '@angular/fire/compat/firestore';
 import { GoogleAuthProvider } from '@angular/fire/auth';
-import { Observable, of, switchMap } from 'rxjs';
+import { firstValueFrom, Observable, of, switchMap, isEmpty } from 'rxjs';
 import { Timestamp } from '@angular/fire/firestore';
 
 @Injectable()
 export class AuthService {
-	private user: User | undefined;
-	public user$: Observable<any> | undefined;
+	public user$: Observable<User | null | undefined> = new Observable<
+		User | null | undefined
+	>();
 
 	constructor(
 		private afAuth: AngularFireAuth, // Inject Firebase auth service
-		private afs: AngularFirestore // Inject Firestore service
+		public afs: AngularFirestore // Inject Firestore service
 	) {
-		this.user$ = this.afAuth.authState.pipe(
-			switchMap((usr) => {
-				console.log('Here at switchMap');
-				if (usr) {
-					console.log(usr);
-					if (!usr.isAnonymous) {
-						//user is authenticated
-						console.log('anonymous', usr);
-						return this.afs.doc<User>(`users/${usr.uid}`).valueChanges();
+		console.log('init ', this.user$);
+		if (this.user$.pipe(isEmpty())) {
+			this.user$ = this.afAuth.authState.pipe(
+				switchMap((usr) => {
+					if (usr) {
+						if (!usr.isAnonymous) {
+							//console.log('Not anonymous');
+							//user is authenticated
+							return this.afs.doc<User>(`users/${usr.uid}`).valueChanges();
+						} else {
+							return new Promise<User>((res, rej) => {
+								let ur: User = new User(Role.Visitor);
+								//console.log('ur is ', ur);
+								res(ur);
+							});
+						}
 					} else {
-						console.log('Here at anonymous login stage');
-						if (this.user) this.user.Role = Role.Visitor;
-						return new Promise<User>((res, rej) => {
-							let ur: User = {
-								Role: Role.Visitor,
-							};
-							res(ur);
-						});
+						return of(null);
 					}
-				} else {
-					return of(null);
-				}
-			})
-		);
+				})
+			);
+		}
 	}
 
-	isAuthorized() {
-		return !!this.user;
-	}
-
-	hasRole(role: Role) {
-		return this.isAuthorized() && this.user?.Role === role;
+	getUser(): Promise<User | null | undefined> {
+		const ur = firstValueFrom(this.user$);
+		if (ur) {
+			return ur;
+		} else {
+			return new Promise<User | null | undefined>((res, rej) => {
+				res(null);
+			});
+		}
 	}
 
 	anonymousLogin() {
@@ -58,15 +60,10 @@ export class AuthService {
 			.signInAnonymously()
 			.then(() => {
 				console.log('Anonymous sign in sucess');
-				//this.router.navigate(['calculator']);
 			})
 			.catch(() => {
 				console.log('Error signing in anony user');
 			});
-	}
-
-	login(role: Role) {
-		this.user = { Role: role };
 	}
 
 	googleSignin() {
@@ -75,14 +72,12 @@ export class AuthService {
 
 	// Auth logic to run auth providers
 	async authLogin(provider: any) {
-		return this.afAuth
-			.signInWithPopup(provider)
-			.then((result) => {
-				this.updateUserData(result.user);
-			})
-			.catch((error) => {
-				window.alert(error);
-			});
+		try {
+			const result = await this.afAuth.signInWithPopup(provider);
+			this.updateUserData(result.user);
+		} catch (error) {
+			window.alert(error);
+		}
 	}
 
 	async updateUserData(user: any) {
@@ -92,10 +87,7 @@ export class AuthService {
 
 		userRef.get().subscribe({
 			next: (oldData) => {
-				this.user = { Role: Role.User };
 				if (oldData && user.uid === oldData.get('uid')) {
-					// sessionStorage.setItem('language', oldData.get('language'));
-					this.user = { Role: oldData.get('role') };
 					return userRef.set({ last_login: Timestamp.now() }, { merge: true });
 				} else {
 					//new user then create data entry in firestore
@@ -116,7 +108,6 @@ export class AuthService {
 	}
 
 	logout() {
-		this.user = undefined;
 		this.afAuth.signOut().then(() => {
 			console.log('Sign out success');
 		});

@@ -6,27 +6,50 @@
 
 		<!-- Authorized only -->
 		<li class="nav-item" *ngIf="isAuthorized">
-			<a class="nav-link" [routerLink]="['profile']">Profile</a>
+			<a
+				class="nav-link"
+				[routerLink]="['profile']"
+				routerLinkActive="active-tab-look"
+				>Profile</a
+			>
+		</li>
+
+		<!-- Anonymous only -->
+		<li class="nav-item" *ngIf="!isUser && !isAdmin">
+			<a
+				class="nav-link"
+				[routerLink]="['login']"
+				routerLinkActive="active-tab-look"
+				>Login</a
+			>
 		</li>
 
 		<!-- Admin only -->
 		<li class="nav-item" *ngIf="isAdmin">
-			<a class="nav-link" [routerLink]="['admin', 'dashboard']">Dashboard</a>
-		</li>
-
-		<!-- Anonymous only -->
-		<li class="nav-item" *ngIf="!isAuthorized">
-			<a class="nav-link" [routerLink]="['login']">Login</a>
+			<a
+				class="nav-link"
+				[routerLink]="['admin', 'dashboard']"
+				routerLinkActive="active-tab-look"
+				>Dashboard</a
+			>
 		</li>
 
 		<!-- Authorized only -->
-		<li class="nav-item" *ngIf="isAuthorized">
+		<li class="nav-item" *ngIf="isUser || isAdmin">
 			<a class="nav-link" (click)="logout()">Logout</a>
 		</li>
 	</ul>
 
-	<span class="navbar-text">
-		<span class="badge badge-warning" *ngIf="isAuthorized">Authorized</span>
-		<span class="badge badge-danger" *ngIf="isAdmin">Admin</span>
+	<span class="navbar-text"
+		><i class="bi bi-bell"></i
+		><sup [innerText]="notifications.length"></sup>&nbsp;<select>
+			<option
+				*ngFor="let notification of notifications; let ind = index"
+				[value]="ind"
+				[innerText]="notification.title + ' ' + notification.message"
+			></option>
+		</select>
+		<span class="badge badge-warning" *ngIf="isUser">Authorized</span>
+		<span class="badge badge-danger" *ngIf="isAdmin">Admin {{ isAdmin }}</span>
 	</span>
 </header>

@@ -8,6 +8,28 @@ import { AuthService } from './services/auth.service';
 import { LoginComponent } from './login/login.component';
 import { Role } from './models/role';
 import { CommonService } from './services/common.service';
+import {
+	AngularFireAuthGuard,
+	hasCustomClaim,
+	redirectUnauthorizedTo,
+	redirectLoggedInTo,
+	canActivate,
+	AuthPipe,
+} from '@angular/fire/compat/auth-guard';
+import { map } from 'rxjs/operators';
+import { AngularFirestore } from '@angular/fire/compat/firestore';
+
+const adminOnly: AuthPipe = map((user) => {
+	if (user && user.uid) {
+		//check in firestore if this uid exists
+		console.log('user.uid', user.uid);
+		return user.uid == 'WCWBz46VZQfgEsrB3niPv0Id0mD2';
+	} else {
+		return false;
+	}
+});
+const redirectUnauthorizedToLogin = () => redirectUnauthorizedTo(['login']);
+const redirectLoggedInToProfile = () => redirectLoggedInTo(['profile']);
 
 const routes: Routes = [
 	{
@@ -17,13 +39,12 @@ const routes: Routes = [
 				path: '',
 				component: HomeComponent,
 			},
-
 			{
 				path: 'profile',
-				canActivate: [AuthGuard],
 				component: ProfileComponent,
+				canLoad: [AuthGuard],
+				canActivate: [AuthGuard],
 			},
-
 			{
 				path: 'login',
 				component: LoginComponent,
@@ -49,6 +70,6 @@ const routes: Routes = [
 @NgModule({
 	imports: [RouterModule.forRoot(routes)],
 	exports: [RouterModule],
-	providers: [AuthGuard, AuthService, CommonService],
+	providers: [AuthGuard, CommonService],
 })
 export class AppRoutingModule {}
