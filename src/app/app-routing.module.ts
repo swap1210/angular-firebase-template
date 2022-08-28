@@ -23,7 +23,8 @@ const adminOnly: AuthPipe = map((user) => {
 	if (user && user.uid) {
 		//check in firestore if this uid exists
 		console.log('user.uid', user.uid);
-		return user.uid == 'WCWBz46VZQfgEsrB3niPv0Id0mD2';
+		//custom admin list logic
+		return user.uid == '';
 	} else {
 		return false;
 	}
