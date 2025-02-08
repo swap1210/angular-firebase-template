@@ -1,12 +1,10 @@
 {
-	"hosting": {
-		"public": "dist/angular.firebase.template",
-		"ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
-		"rewrites": [
-			{
-				"source": "**",
-				"destination": "/index.html"
-			}
-		]
-	}
+  "firestore": {
+    "host": "localhost",
+    "port": 8080
+  },
+  "auth": {
+    "host": "localhost",
+    "port": 9099
+  }
 }

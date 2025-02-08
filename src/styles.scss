@@ -1,26 +1,46 @@
+// Custom Theming for Angular Material
+// For more information: https://material.angular.io/guide/theming
+@use "@angular/material" as mat;
+
+html {
+  @include mat.theme(
+    (
+      color: (
+        theme-type: light,
+        primary: mat.$azure-palette,
+      ),
+      typography: Archivo,
+      density: 0,
+    )
+  );
+} /* You can add global styles to this file, and also import other style files */
+
 html,
 body {
-	margin: 0em;
-	height: 100%;
-	background-color: #e5e5e5;
-	font-family: system-ui, serif;
-	display: grid;
+  height: 100%;
+  background-color: #f2f8f9;
 }
-.page-banner {
-	display: flex;
-	font-size: 2em;
-	font-weight: 500;
+body {
+  font-family: Archivo, Roboto, "Helvetica Neue", sans-serif;
+}
+.logo-icon {
+  height: 2em;
+  margin-right: 10px;
 }
 
-.std-button {
-	background-color: #555; /* Green */
-	border: none;
-	color: #00cc00;
-	padding: 1em 1.5em;
-	text-align: center;
-	text-decoration: none;
-	display: inline-block;
-	font-size: 16px;
+// debugging styling
+.hazard-border {
+  border: 0.6em solid pink;
+  border-image: repeating-linear-gradient(
+      -55deg,
+      #000,
+      #000 20px,
+      #ffb101 20px,
+      #ffb101 40px
+    )
+    10;
 }
-//backgroud=#555
-//forground=#0F8
+
+.descriptive-text {
+  color: #666d80;
+}

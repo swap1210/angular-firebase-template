@@ -1,5 +1,52 @@
-<div class="login-parent">
-	<div class="page-banner" role="alert">Login component!</div>
-
-	<button class="std-button" (click)="login()">Login as User</button>
-</div>
+<h1 [innerText]="cs.all_texts.login.title1"></h1>
+<p class="descriptive-text" [innerText]="cs.all_texts.login.description"></p>
+<br />
+@if (errorMessage) {
+<div class="mat-error">{{ errorMessage }}</div>
+}
+<form
+  class="flex-down flex-vertical-center form-controls-cls flex-rg-s-1"
+  [formGroup]="loginForm"
+  (ngSubmit)="onLogin()"
+>
+  <mat-form-field>
+    <mat-label [innerText]="cs.all_texts.login.email_lbl"></mat-label>
+    <input
+      matInput
+      type="text"
+      formControlName="email"
+      [placeholder]="cs.all_texts.login.email_plchldr"
+    />
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label [innerText]="cs.all_texts.login.password_lbl"></mat-label>
+    <input
+      matInput
+      type="password"
+      formControlName="password"
+      [placeholder]="cs.all_texts.login.password_plchldr"
+    />
+  </mat-form-field>
+  <button
+    mat-flat-button
+    type="submit"
+    [innerText]="cs.all_texts.login.login_btn_lbl"
+  ></button>
+  <div class="mg-t-l-1 mg-b-l-1 in-hr-text">
+    <span>&nbsp;{{ cs.all_texts.login.or_hr }}&nbsp;</span>
+  </div>
+  <button mat-raised-button (click)="onGoogleLogin()">
+    <img
+      mat-icon-button
+      class="logo-icon"
+      src="google-logo.png"
+      alt="Google Logo"
+    />
+  </button>
+  <p>
+    {{ cs.all_texts.login.notRegistered }}&nbsp;<a
+      [routerLink]="[ROOT_ROUTE, REGISTER_ROUTE]"
+      >{{ cs.all_texts.login.registerHref }}</a
+    >
+  </p>
+</form>

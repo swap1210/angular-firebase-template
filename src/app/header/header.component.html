@@ -1,0 +1,35 @@
+<mat-toolbar>
+  @if (!authService.hasUserDocumentSignal()){
+  <button
+    mat-icon-button
+    aria-label="menu button icon"
+    (click)="triggerSideNavToggle()"
+  >
+    <mat-icon>menu</mat-icon>
+  </button>
+  }
+  <span class="flex-spacer"></span>
+  <button [routerLink]="[SECURE_HOME_ROUTE]" mat-button>
+    <img src="./title-logo.png" height="35em" />
+  </button>
+  <span class="flex-spacer"></span>
+  @if(authService.isAuthenticated()){
+  <!-- switch user button if user has more than 1 role -->
+  @if (hasMultipleRoles()) {<button
+    mat-icon-button
+    class="account_circle-icon"
+    aria-label="switch user button icon"
+    (click)="onSwitchUser()"
+  >
+    <mat-icon>switch_account</mat-icon></button
+  >}
+  <button
+    mat-icon-button
+    class="power_settings_new-icon"
+    aria-label="logout button icon"
+    (click)="onLogout()"
+  >
+    <mat-icon>power_settings_new</mat-icon>
+  </button>
+  }
+</mat-toolbar>

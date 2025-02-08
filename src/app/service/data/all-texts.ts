@@ -1,0 +1,111 @@
+type Content = {
+  title1: string;
+  title2?: string;
+  description: string;
+};
+
+type ContentHTML = {
+  title1: string;
+  title_sub?: string;
+  title2?: string;
+  descriptionHtml: string;
+};
+
+interface PageStructure extends Content {
+  header_title?: string;
+  welcomeImage?: string;
+}
+
+interface RegisterPageStructure extends PageStructure {
+  email_lbl: string;
+  email_plchldr: string;
+  password_lbl: string;
+  password_plchldr: string;
+  confirm_password: string;
+  or_hr: string;
+  t_n_c_lbl: string;
+  t_n_cHref: string;
+  signup_btn_lbl: string;
+  alreadyRegistered: string;
+  loginHref: string;
+}
+
+interface TNCPageStructure extends PageStructure {
+  t_n_c: string;
+  effective_date_fmt: string;
+  archive_version_href: string;
+  download_pdf_href: string;
+  country_version?: string;
+  topics: ContentHTML[];
+}
+
+interface LoginPageStructure extends PageStructure {
+  email_lbl: string;
+  email_plchldr: string;
+  password_lbl: string;
+  password_plchldr: string;
+  forget_password: string;
+  or_hr: string;
+  login_btn_lbl: string;
+  notRegistered: string;
+  registerHref: string;
+}
+
+type AppStructure = {
+  register: RegisterPageStructure;
+  login: LoginPageStructure;
+  t_n_c: TNCPageStructure;
+};
+
+export const all_texts: AppStructure = {
+  register: {
+    title1: 'Create an account',
+    description: 'Enter your details to create an account.',
+    email_lbl: 'Email',
+    email_plchldr: 'Enter Your email',
+    password_lbl: 'Password',
+    password_plchldr: 'Enter Your password',
+    confirm_password: 'Confirm Your Password',
+    or_hr: 'OR',
+    signup_btn_lbl: 'Sign Up',
+    alreadyRegistered: 'Already have an account?',
+    loginHref: 'Log In',
+    t_n_c_lbl: '',
+    t_n_cHref: '',
+  },
+  login: {
+    title1: 'Welcome back,👋',
+    description: 'Glad to meet you again!, please login to use the app.',
+    email_lbl: 'Email',
+    email_plchldr: 'Enter Your email',
+    password_lbl: 'Password',
+    password_plchldr: 'Enter Your password',
+    forget_password: 'Forgot password?',
+    or_hr: 'OR',
+    login_btn_lbl: 'Login in',
+    notRegistered: 'Don’t have an account?',
+    registerHref: 'Sign Up',
+  },
+  t_n_c: {
+    t_n_c: '',
+    effective_date_fmt: '',
+    archive_version_href: '',
+    download_pdf_href: '',
+    topics: [
+      {
+        title1: '',
+        title_sub: '',
+        title2: '',
+        descriptionHtml: '',
+      },
+      {
+        title1: '',
+        title_sub: '',
+        title2: '',
+        descriptionHtml: '',
+      },
+    ],
+    title1: '',
+    description: '',
+  },
+};

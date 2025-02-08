@@ -1,16 +1,11 @@
-import { Component, OnInit } from '@angular/core';
-import { user } from '@angular/fire/auth';
-import { Role } from '../models/role';
-import { User } from '../models/user';
-import { AuthService } from '../services/auth.service';
+import { Component } from '@angular/core';
 
 @Component({
-	selector: 'app-profile',
-	templateUrl: './profile.component.html',
-	styleUrls: ['./profile.component.css'],
+  selector: 'app-profile',
+  imports: [],
+  templateUrl: './profile.component.html',
+  styleUrl: './profile.component.scss'
 })
-export class ProfileComponent implements OnInit {
-	Role = Role;
-	constructor(public auth: AuthService) {}
-	ngOnInit() {}
+export class ProfileComponent {
+
 }

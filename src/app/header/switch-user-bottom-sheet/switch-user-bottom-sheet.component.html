@@ -1,0 +1,16 @@
+<mat-nav-list>
+  @for (route of this.authService.currentUserRoleRoutesSignal(); track
+  route.key){
+  <mat-list-item
+    role="listitem"
+    (click)="navigateTo($event, route.path)"
+    matRipple
+  >
+    <mat-icon matListItemIcon>{{ route.icon }}</mat-icon>
+    <div matListItemTitle>{{ route.title }}</div> </mat-list-item
+  >}
+</mat-nav-list>
+
+<!-- Copyright 2025 Google LLC. All Rights Reserved.
+    Use of this source code is governed by an MIT-style license that
+    can be found in the LICENSE file at https://angular.io/license -->

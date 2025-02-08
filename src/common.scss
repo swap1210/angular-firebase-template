@@ -1,0 +1,51 @@
+.flex-spacer {
+  flex: 1 1 auto;
+}
+.flex-down {
+  display: flex;
+  flex-direction: column;
+}
+
+.flex-vertical-center {
+  align-items: center;
+}
+
+.flex-rg-s-1 {
+  row-gap: 0.2em;
+}
+
+.mg-t-s-1 {
+  margin: 0.2em;
+}
+
+.mg-b-s-1 {
+  margin: 0.2em;
+}
+
+.mg-t-l-1 {
+  margin-top: 2em;
+}
+
+.mg-b-l-1 {
+  margin-bottom: 2em;
+}
+
+.form-controls-cls {
+}
+
+.icon-content-cls {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+.in-hr-text {
+  width: 100%;
+  text-align: center;
+  border-bottom: 1px solid #000;
+  line-height: 0.1em;
+}
+
+.in-hr-text span {
+  padding: 0 10px;
+  background-color: #f9f9fb;
+}

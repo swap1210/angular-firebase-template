@@ -22,7 +22,7 @@ create environment variable by the name APIKEY and it's value with Firebase APIK
 ## To Run
 
 ```bash
-npm start
+npm run start:dev
 ```
 
 ## To Build for Development
