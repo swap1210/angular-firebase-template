@@ -2,6 +2,7 @@ export const ROOT_ROUTE = '/';
 export const HOME_ROUTE = 'home';
 export const REGISTER_ROUTE = 'register';
 export const LOGIN_ROUTE = 'login';
+export const PROFILE_ROUTE = 'profile';
 export const SECURE_HOME_ROUTE = 'secure-home';
 export const SUPPORT_USER_ROUTE = 'support-user';
 export const SERVICE_USER_ROUTE = 'service-user';

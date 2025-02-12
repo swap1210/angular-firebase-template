@@ -19,6 +19,12 @@ import {
   REGISTER_ROUTE,
   ROOT_ROUTE,
 } from '../service/data/all-routes';
+import {
+  Auth,
+  GoogleAuthProvider,
+  signInWithEmailAndPassword,
+  signInWithPopup,
+} from '@angular/fire/auth';
 
 @Component({
   selector: 'app-login',
@@ -34,10 +40,10 @@ import {
   ],
 })
 export class LoginComponent implements OnInit {
+  firebaseAuth = inject(Auth);
   isDevelopment = !environment.production;
   http = inject(HttpClient);
   router = inject(Router);
-  authService = inject(AuthService);
   cs = inject(CommonService);
 
   loginForm: FormGroup = new FormGroup({});
@@ -62,24 +68,27 @@ export class LoginComponent implements OnInit {
   onLogin(): void {
     console.log('login action performed');
     const rawForm = this.loginForm.getRawValue();
-    this.authService.login(rawForm.email, rawForm.password).subscribe({
-      next: () => {
+    signInWithEmailAndPassword(
+      this.firebaseAuth,
+      rawForm.email,
+      rawForm.password
+    )
+      .then(() => {
         console.log('logged in successfully');
-      },
-      error: (err) => {
-        this.errorMessage = 'Failed to login: ' + err.code;
-      },
-    });
+      })
+      .catch((error) => {
+        this.errorMessage = 'Failed to login: ' + error.code;
+      });
   }
 
   onGoogleLogin(): void {
-    this.authService.registerOrLoginWithGoogle(true).subscribe({
-      next: () => {
-        console.log('logged in successfully');
-      },
-      error: (err) => {
+    const provider = new GoogleAuthProvider();
+    signInWithPopup(this.firebaseAuth, provider)
+      .then(() => {
+        console.log('logged in with Google successfully');
+      })
+      .catch((err) => {
         this.errorMessage = 'Failed to login: ' + err.code;
-      },
-    });
+      });
   }
 }

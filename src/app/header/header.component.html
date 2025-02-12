@@ -1,5 +1,5 @@
 <mat-toolbar>
-  @if (!authService.hasUserDocumentSignal()){
+  @if (authService.isAuthenticatedSignal()){
   <button
     mat-icon-button
     aria-label="menu button icon"
@@ -13,9 +13,11 @@
     <img src="./title-logo.png" height="35em" />
   </button>
   <span class="flex-spacer"></span>
-  @if(authService.isAuthenticated()){
+  @if(authService.isAuthenticatedSignal()){
   <!-- switch user button if user has more than 1 role -->
-  @if (hasMultipleRoles()) {<button
+  @if (true) {
+  <!-- @if (hasMultipleRoles()) { -->
+  <button
     mat-icon-button
     class="account_circle-icon"
     aria-label="switch user button icon"
@@ -23,13 +25,20 @@
   >
     <mat-icon>switch_account</mat-icon></button
   >}
-  <button
-    mat-icon-button
-    class="power_settings_new-icon"
-    aria-label="logout button icon"
-    (click)="onLogout()"
-  >
-    <mat-icon>power_settings_new</mat-icon>
+  <button mat-icon-button [matMenuTriggerFor]="menu">
+    <mat-icon>account_circle</mat-icon>
   </button>
+  <mat-menu #menu="matMenu">
+    <button mat-menu-item>
+      <mat-icon>switch_account</mat-icon><span>Switch Role</span>
+    </button>
+    <button mat-menu-item>
+      <mat-icon>manage_accounts</mat-icon><span>Manage Account</span>
+    </button>
+    <button mat-menu-item (click)="onLogout()">
+      <mat-icon>power_settings_new</mat-icon>
+      <span>Sign Out</span>
+    </button>
+  </mat-menu>
   }
 </mat-toolbar>

@@ -15,6 +15,12 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { FormsModule } from '@angular/forms';
 import { CommonService } from '../service/common.service';
 import { LOGIN_ROUTE, ROOT_ROUTE } from '../service/data/all-routes';
+import {
+  Auth,
+  createUserWithEmailAndPassword,
+  GoogleAuthProvider,
+  signInWithPopup,
+} from '@angular/fire/auth';
 
 @Component({
   selector: 'app-register',
@@ -31,6 +37,7 @@ import { LOGIN_ROUTE, ROOT_ROUTE } from '../service/data/all-routes';
   ],
 })
 export class RegisterComponent implements OnInit {
+  firebaseAuth = inject(Auth);
   isDevelopment = !environment.production;
   http = inject(HttpClient);
 
@@ -59,24 +66,29 @@ export class RegisterComponent implements OnInit {
   onSubmit(): void {
     console.log('registering');
     const rawForm = this.registerForm.getRawValue();
-    this.authService.register(rawForm.email!, rawForm.password!).subscribe({
-      next: () => {
+    if (this.registerForm.invalid) return;
+
+    createUserWithEmailAndPassword(
+      this.firebaseAuth,
+      rawForm.email,
+      rawForm.password
+    )
+      .then(() => {
         console.log('register success!');
-      },
-      error: (err) => {
+      })
+      .catch((err) => {
         this.errorMessage = 'Failed to register: ' + err.code;
-      },
-    });
+      });
   }
 
   onGoogleRegister(): void {
-    this.authService.registerOrLoginWithGoogle(false).subscribe({
-      next: () => {
-        console.log('Google register success!');
-      },
-      error: (err) => {
-        this.errorMessage = 'Failed to register: ' + err.code;
-      },
-    });
+    const provider = new GoogleAuthProvider();
+    signInWithPopup(this.firebaseAuth, provider)
+      .then(() => {
+        console.log('logged in with Google successfully');
+      })
+      .catch((err) => {
+        this.errorMessage = 'Failed to login: ' + err.code;
+      });
   }
 }

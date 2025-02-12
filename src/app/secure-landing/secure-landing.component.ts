@@ -17,20 +17,19 @@ export class SecureLandingComponent {
     getRouteObjFromPath(SECURE_HOME_ROUTE);
   router = inject(Router);
   authService = inject(AuthService);
-  currentUserDocumentSignal = this.authService.currentUserDocumentSignal();
+  // firstRouteFinderEffect =
+  // effect(() => {
+  //   const firstRoleRoute =
+  //     this.authService.currentUserRoleRoutesSignal()?.[0];
+  //   if (firstRoleRoute) {
+  //     console.log(`Navigating to: ${firstRoleRoute.path}`);
+  //     this.router.navigate([firstRoleRoute.path]);
+  //   } else {
+  //     console.log('No role-based routes found, navigating to default route.');
+  //   }
+  // });
 
   constructor() {
     console.count("SecureLandingComponent constructor can't be more than 1: ");
-
-    effect(() => {
-      const firstRoleRoute =
-        this.authService.currentUserRoleRoutesSignal()?.[0];
-      if (firstRoleRoute) {
-        console.log(`Navigating to: ${firstRoleRoute.path}`);
-        this.router.navigate([firstRoleRoute.path]);
-      } else {
-        console.log('No role-based routes found, navigating to default route.');
-      }
-    });
   }
 }

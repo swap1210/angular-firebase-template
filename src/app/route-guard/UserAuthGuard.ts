@@ -6,20 +6,21 @@ import { LOGIN_ROUTE } from '../service/data/all-routes';
 @Injectable({
   providedIn: 'root',
 })
-export class AuthGuard implements CanActivate {
+export class UserAuthGuard implements CanActivate {
   router = inject(Router);
   authService = inject(AuthService);
 
   canActivate(): boolean {
     console.log(
-      'AuthGuard#canActivate called ',
-      this.authService.isAuthenticated()
+      'UserAuthGuard#canActivate called ',
+      this.authService.isAuthenticatedSignal()
     );
-    if (this.authService.isAuthenticated()) {
-      return true; // Allow navigation
-    } else {
-      this.router.navigate([LOGIN_ROUTE]); // Redirect to login page
-      return false; // Block navigation
+
+    if (!this.authService.isAuthenticatedSignal()) {
+      this.router.navigate([LOGIN_ROUTE]);
+      return false;
     }
+
+    return true;
   }
 }

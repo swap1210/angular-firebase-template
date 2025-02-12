@@ -1,4 +1,4 @@
 <h1>
-  Welcome {{ authService.currentUserDocumentSignal()?.email }} to
+  Welcome {{ authService.userSignal()?.email }} to
   {{ SECURE_HOME_ROUTE_OBJ?.title }}!
 </h1>
