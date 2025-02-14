@@ -1,3 +1,87 @@
+export const languagesMap: SelectFormFieldOption[] = [
+  {
+    value: 'en-US',
+    viewValue: 'English (United States)',
+  },
+];
+
+export const all_texts: AppStructure = {
+  register: {
+    title1: 'Create an account',
+    description: 'Enter your details to create an account.',
+    email_lbl: 'Email',
+    email_plchldr: 'Enter Your email',
+    password_lbl: 'Password',
+    password_plchldr: 'Enter Your password',
+    confirm_password: 'Confirm Your Password',
+    or_hr: 'OR',
+    signup_btn_lbl: 'Sign Up',
+    alreadyRegistered: 'Already have an account?',
+    loginHref: 'Log In',
+    t_n_c_lbl: '',
+    t_n_cHref: '',
+  },
+  login: {
+    title1: 'Welcome back,👋',
+    description: 'Glad to meet you again!, please login to use the app.',
+    email_lbl: 'Email',
+    email_plchldr: 'Enter Your email',
+    password_lbl: 'Password',
+    password_plchldr: 'Enter Your password',
+    forget_password: 'Forgot password?',
+    or_hr: 'OR',
+    login_btn_lbl: 'Login in',
+    notRegistered: 'Don’t have an account?',
+    registerHref: 'Sign Up',
+  },
+  t_n_c: {
+    t_n_c: '',
+    effective_date_fmt: '',
+    archive_version_href: '',
+    download_pdf_href: '',
+    topics: [
+      {
+        title1: '',
+        title_sub: '',
+        title2: '',
+        descriptionHtml: '',
+      },
+      {
+        title1: '',
+        title_sub: '',
+        title2: '',
+        descriptionHtml: '',
+      },
+    ],
+    title1: '',
+    description: '',
+  },
+  profile: {
+    title1: 'User Profile',
+    description: '',
+    first_name: {
+      label: 'First Name',
+      type: 'text',
+    },
+    last_name: {
+      label: 'Last Name',
+      type: 'text',
+    },
+    languages: {
+      label: 'Select Language',
+      defaultValue: 'en-US',
+      options: languagesMap,
+    },
+    createProfileBtn: {
+      label: 'Create Profile',
+    },
+    language: {
+      type: 'text',
+      label: 'Language',
+    },
+  },
+};
+
 type Content = {
   title1: string;
   title2?: string;
@@ -51,61 +135,42 @@ interface LoginPageStructure extends PageStructure {
   registerHref: string;
 }
 
+type Button = {
+  label: string;
+};
+
+type FormField = {
+  label: string;
+  aria_label?: string;
+};
+
+interface InputFormField extends FormField {
+  placeholder?: string;
+  defaultValue?: string;
+  type: string;
+}
+
+interface SelectFormField extends FormField {
+  defaultValue?: string;
+  options: SelectFormFieldOption[];
+}
+
+interface SelectFormFieldOption {
+  value: string;
+  viewValue: string;
+}
+
+export interface ProfilePageStructure extends PageStructure {
+  first_name: InputFormField;
+  last_name: InputFormField;
+  language: InputFormField; //added for view only screen
+  languages: SelectFormField;
+  createProfileBtn: Button;
+}
+
 type AppStructure = {
   register: RegisterPageStructure;
   login: LoginPageStructure;
+  profile: ProfilePageStructure;
   t_n_c: TNCPageStructure;
-};
-
-export const all_texts: AppStructure = {
-  register: {
-    title1: 'Create an account',
-    description: 'Enter your details to create an account.',
-    email_lbl: 'Email',
-    email_plchldr: 'Enter Your email',
-    password_lbl: 'Password',
-    password_plchldr: 'Enter Your password',
-    confirm_password: 'Confirm Your Password',
-    or_hr: 'OR',
-    signup_btn_lbl: 'Sign Up',
-    alreadyRegistered: 'Already have an account?',
-    loginHref: 'Log In',
-    t_n_c_lbl: '',
-    t_n_cHref: '',
-  },
-  login: {
-    title1: 'Welcome back,👋',
-    description: 'Glad to meet you again!, please login to use the app.',
-    email_lbl: 'Email',
-    email_plchldr: 'Enter Your email',
-    password_lbl: 'Password',
-    password_plchldr: 'Enter Your password',
-    forget_password: 'Forgot password?',
-    or_hr: 'OR',
-    login_btn_lbl: 'Login in',
-    notRegistered: 'Don’t have an account?',
-    registerHref: 'Sign Up',
-  },
-  t_n_c: {
-    t_n_c: '',
-    effective_date_fmt: '',
-    archive_version_href: '',
-    download_pdf_href: '',
-    topics: [
-      {
-        title1: '',
-        title_sub: '',
-        title2: '',
-        descriptionHtml: '',
-      },
-      {
-        title1: '',
-        title_sub: '',
-        title2: '',
-        descriptionHtml: '',
-      },
-    ],
-    title1: '',
-    description: '',
-  },
 };

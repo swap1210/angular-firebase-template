@@ -1,5 +1,5 @@
 <mat-toolbar>
-  @if (authService.isAuthenticatedSignal()){
+  @if (!authService.isAuthenticatedSignal()){
   <button
     mat-icon-button
     aria-label="menu button icon"
@@ -14,25 +14,16 @@
   </button>
   <span class="flex-spacer"></span>
   @if(authService.isAuthenticatedSignal()){
-  <!-- switch user button if user has more than 1 role -->
-  @if (true) {
-  <!-- @if (hasMultipleRoles()) { -->
-  <button
-    mat-icon-button
-    class="account_circle-icon"
-    aria-label="switch user button icon"
-    (click)="onSwitchUser()"
-  >
-    <mat-icon>switch_account</mat-icon></button
-  >}
   <button mat-icon-button [matMenuTriggerFor]="menu">
     <mat-icon>account_circle</mat-icon>
   </button>
   <mat-menu #menu="matMenu">
-    <button mat-menu-item>
-      <mat-icon>switch_account</mat-icon><span>Switch Role</span>
-    </button>
-    <button mat-menu-item>
+    <!-- switch user button if user has more than 1 role -->
+    @if (hasMultipleRoles()) {
+    <button mat-menu-item (click)="onSwitchUser()">
+      <mat-icon>switch_account</mat-icon><span>Switch Role</span></button
+    >}
+    <button mat-menu-item [routerLink]="[PROFILE_ROUTE]">
       <mat-icon>manage_accounts</mat-icon><span>Manage Account</span>
     </button>
     <button mat-menu-item (click)="onLogout()">

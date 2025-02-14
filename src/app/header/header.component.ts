@@ -1,4 +1,12 @@
-import { Component, EventEmitter, inject, Input, Output } from '@angular/core';
+import {
+  Component,
+  computed,
+  EventEmitter,
+  inject,
+  Input,
+  Output,
+  Signal,
+} from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatToolbarModule } from '@angular/material/toolbar';
@@ -7,7 +15,11 @@ import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '../service/auth.service';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { SwitchUserBottomSheetComponent } from './switch-user-bottom-sheet/switch-user-bottom-sheet.component';
-import { LOGIN_ROUTE, SECURE_HOME_ROUTE } from '../service/data/all-routes';
+import {
+  LOGIN_ROUTE,
+  PROFILE_ROUTE,
+  SECURE_HOME_ROUTE,
+} from '../service/data/all-routes';
 import { MatMenuModule } from '@angular/material/menu';
 import { Auth } from '@angular/fire/auth';
 import { ProfileService } from '../service/profile.service';
@@ -31,9 +43,9 @@ export class HeaderComponent {
   SECURE_HOME_ROUTE = SECURE_HOME_ROUTE;
   authService = inject(AuthService);
   profileService = inject(ProfileService);
-  // hasMultipleRoles: Signal<boolean> = computed(() => {
-  //   return this.authService.currentUserRoleRoutesSignal().length > 1;
-  // });
+  hasMultipleRoles: Signal<boolean> = computed(() => {
+    return this.profileService.roleRouteSignal().length > 1;
+  });
   private _bottomSheet = inject(MatBottomSheet);
 
   @Input()
@@ -43,6 +55,7 @@ export class HeaderComponent {
   triggerSideNavToggle = () => {
     this.sideNavToggleEventEmitter.emit();
   };
+  PROFILE_ROUTE = PROFILE_ROUTE;
 
   onSwitchUser() {
     this._bottomSheet.open(SwitchUserBottomSheetComponent);

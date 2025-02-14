@@ -9,16 +9,11 @@ import {
 import { MatButtonModule } from '@angular/material/button';
 import { Router, RouterModule } from '@angular/router';
 import { environment } from '../../environments/environment';
-import { AuthService } from '../service/auth.service';
 import { CommonService } from '../service/common.service';
 import { MatInputModule } from '@angular/material/input';
 import { FormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import {
-  HOME_ROUTE,
-  REGISTER_ROUTE,
-  ROOT_ROUTE,
-} from '../service/data/all-routes';
+import { REGISTER_ROUTE, ROOT_ROUTE } from '../service/data/all-routes';
 import {
   Auth,
   GoogleAuthProvider,

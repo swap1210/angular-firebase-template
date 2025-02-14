@@ -5,6 +5,9 @@
   display: flex;
   flex-direction: column;
 }
+.flex-left-to-right {
+  display: flex;
+}
 
 .flex-vertical-center {
   align-items: center;
@@ -12,6 +15,18 @@
 
 .flex-rg-s-1 {
   row-gap: 0.2em;
+}
+
+.flex-rg-m-1 {
+  row-gap: 1.2em;
+}
+
+.flex-cg-s-1 {
+  column-gap: 0.2em;
+}
+
+.flex-cg-m-1 {
+  column-gap: 1.2em;
 }
 
 .mg-t-s-1 {
@@ -48,4 +63,25 @@
 .in-hr-text span {
   padding: 0 10px;
   background-color: #f9f9fb;
+}
+
+.title-text {
+  font-weight: 700;
+}
+.summary-text {
+}
+
+.large-br {
+  height: 2em;
+}
+
+.grid-container {
+  display: grid;
+  grid-template-columns: auto auto; /* 2 columns */
+  gap: 0.8em; /* Spacing between grid items */
+  // width: 300px; /* Adjust width as needed */
+}
+
+.grid-item {
+  padding: 0.1em;
 }

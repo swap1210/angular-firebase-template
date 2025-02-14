@@ -1,5 +1,9 @@
-import { inject, Injectable, signal } from '@angular/core';
-import { ProfileDocumentInterface, TM_Role } from './data/user.interface';
+import { computed, inject, Injectable, Signal, signal } from '@angular/core';
+import {
+  InputProfileDocumentInterface,
+  ProfileDocumentInterface,
+  TM_Role,
+} from './data/user.interface';
 import {
   doc,
   DocumentData,
@@ -19,6 +23,13 @@ export class ProfileService {
   firestore = inject(Firestore);
   firebaseUser$ = toObservable(this.authService.userSignal);
   profileSignal = signal<ProfileDocumentInterface | null>(null);
+  roleRouteSignal: Signal<TM_Role[]> = computed(() => {
+    if (this.profileSignal()) {
+      return this.profileSignal()!.roles;
+    } else {
+      return [];
+    }
+  });
 
   constructor() {
     this.firebaseUser$.subscribe(async (user) => {
@@ -44,7 +55,7 @@ export class ProfileService {
   }
 
   createProfileDocument = async (
-    inputProfileDocument: ProfileDocumentInterface
+    inputProfileDocument: InputProfileDocumentInterface
   ): Promise<void> => {
     //for null checked value
     const firebaseUser = this.authService.userSignal();
@@ -65,8 +76,8 @@ export class ProfileService {
       displayName: firebaseUser.displayName,
       photoURL: firebaseUser.photoURL,
       roles: [TM_Role.CLIENT],
-      first_name: inputProfileDocument.first_name || '',
-      last_name: inputProfileDocument.last_name || '',
+      first_name: inputProfileDocument.first_name || 'NA',
+      last_name: inputProfileDocument.last_name || 'NA',
       language: inputProfileDocument.language || 'en-US',
     };
     const resultantProfileDocument: ProfileDocumentInterface = Object.assign(

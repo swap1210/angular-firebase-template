@@ -1,0 +1,52 @@
+<form class="flex-down profile-main flex-rg-m-1" [formGroup]="profileForm">
+  <mat-form-field>
+    <mat-label [innerText]="pageText.first_name.label"></mat-label>
+    <input
+      matInput
+      [type]="pageText.first_name.type"
+      formControlName="first_name"
+    />
+    @if (this.profileForm.get('first_name')?.value) {
+    <button
+      matSuffix
+      mat-icon-button
+      aria-label="Clear"
+      (click)="this.profileForm.patchValue({ first_name: '' })"
+    >
+      <mat-icon>close</mat-icon>
+    </button>
+    }
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label [innerText]="pageText.last_name.label"></mat-label>
+    <input
+      matInput
+      [type]="pageText.last_name.type"
+      formControlName="last_name"
+    />
+    @if (this.profileForm.get('last_name')?.value) {
+    <button
+      matSuffix
+      mat-icon-button
+      aria-label="Clear"
+      (click)="this.profileForm.patchValue({ last_name: '' })"
+    >
+      <mat-icon>close</mat-icon>
+    </button>
+    }
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label [innerText]="pageText.languages.label"></mat-label>
+    <mat-select formControlName="language">
+      @for (language of pageText.languages.options; track language.value) {
+      <mat-option [value]="language.value">{{ language.viewValue }}</mat-option>
+      }
+    </mat-select>
+  </mat-form-field>
+  <button
+    mat-flat-button
+    (click)="createProfile()"
+    [innerText]="pageText.createProfileBtn.label"
+    [disabled]="!this.profileForm.valid"
+  ></button>
+</form>

@@ -1,2 +1,16 @@
-<p>profile works!</p>
-<button mat-button (click)="createProfile()">Create Profile</button>
+<div class="flex-left-to-right">
+  <h2 [innerText]="pageText.title1"></h2>
+  <span class="flex-spacer"></span>
+  <button mat-mini-fab (click)="editMode = !editMode">
+    <mat-icon [innerText]="editMode ? 'close' : 'edit'"></mat-icon>
+  </button>
+</div>
+
+@if(editMode){
+<app-profile-edit [pageText]="pageText"></app-profile-edit>
+}@else {
+<app-profile-readonly
+  [pageText]="pageText"
+  [profileData]="profileService.profileSignal()"
+></app-profile-readonly>
+}

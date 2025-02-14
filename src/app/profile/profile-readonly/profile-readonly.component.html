@@ -1,0 +1,19 @@
+<div class="grid-container">
+  <div
+    class="grid-item title-text"
+    [innerText]="pageText.first_name.label"
+  ></div>
+  <div class="grid-item" [innerText]="profileData?.first_name"></div>
+
+  <div
+    class="grid-item title-text"
+    [innerText]="pageText.last_name.label"
+  ></div>
+  <div class="grid-item" [innerText]="profileData?.last_name"></div>
+
+  <div
+    class="grid-item title-text"
+    [innerText]="pageText.languages.label"
+  ></div>
+  <div class="grid-item" [innerText]="languageEquivalentValue()"></div>
+</div>
