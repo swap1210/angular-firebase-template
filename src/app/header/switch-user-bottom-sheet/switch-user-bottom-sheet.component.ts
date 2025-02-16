@@ -35,7 +35,6 @@ export class SwitchUserBottomSheetComponent {
       MatBottomSheetRef
     );
   navigateTo(event: MouseEvent, routePath: string): void {
-    // this.router.navigate([routePath]);
     this.secureLandingService.currentRole.set(getRoleFromString(routePath));
     this._bottomSheetRef.dismiss();
     event.preventDefault();

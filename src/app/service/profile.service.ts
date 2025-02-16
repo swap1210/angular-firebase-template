@@ -9,7 +9,6 @@ import {
   DocumentData,
   DocumentReference,
   Firestore,
-  getDoc,
   onSnapshot,
   setDoc,
   Unsubscribe,

@@ -12,7 +12,6 @@ import {
   SECURE_HOME_ROUTE,
   App_Route,
 } from '../service/data/all-routes';
-import { Router } from '@angular/router';
 import { ProfileService } from '../service/profile.service';
 import { CommonService } from '../service/common.service';
 import { Tab } from '../service/data/all-texts';
@@ -28,18 +27,8 @@ import { SecureLandingService } from '../service/secure-landing.service';
 export class SecureLandingComponent implements OnInit {
   SECURE_HOME_ROUTE_OBJ: App_Route | null =
     getRouteObjFromPath(SECURE_HOME_ROUTE);
-  router = inject(Router);
   authService = inject(AuthService);
   profileService = inject(ProfileService); // Assuming you have a profile service
-  // firstRouteFinderEffect = effect(() => {
-  //   const firstRoleRoute = this.profileService.roleRouteSignal();
-  //   if (firstRoleRoute) {
-  //     console.log(`Navigating to: ${firstRoleRoute[0]}`);
-  //     this.router.navigate([firstRoleRoute[0]]);
-  //   } else {
-  //     console.log('No role-based routes found, navigating to default route.');
-  //   }
-  // });
   commonService = inject(CommonService);
   secureLandingService = inject(SecureLandingService);
   viewContainerRef = inject(ViewContainerRef);
