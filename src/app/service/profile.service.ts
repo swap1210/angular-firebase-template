@@ -2,7 +2,7 @@ import { computed, inject, Injectable, Signal, signal } from '@angular/core';
 import {
   InputProfileDocumentInterface,
   ProfileDocumentInterface,
-  TM_Role,
+  App_Role,
 } from './data/user.interface';
 import {
   doc,
@@ -25,7 +25,7 @@ export class ProfileService {
   firestore = inject(Firestore);
   firebaseUser$ = toObservable(this.authService.userSignal);
   profileSignal = signal<ProfileDocumentInterface | null>(null);
-  roleRouteSignal: Signal<TM_Role[]> = computed(() => {
+  roleRouteSignal: Signal<App_Role[]> = computed(() => {
     if (this.profileSignal()) {
       return this.profileSignal()!.roles;
     } else {
@@ -87,7 +87,7 @@ export class ProfileService {
       email: firebaseUser.email,
       displayName: firebaseUser.displayName,
       photoURL: firebaseUser.photoURL,
-      roles: [TM_Role.CLIENT],
+      roles: [App_Role.CLIENT],
       first_name: inputProfileDocument.first_name || 'NA',
       last_name: inputProfileDocument.last_name || 'NA',
       language: inputProfileDocument.language || 'en-US',

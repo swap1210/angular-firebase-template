@@ -19,6 +19,9 @@
   </button>
   <mat-menu #menu="matMenu">
     <!-- switch user button if user has more than 1 role -->
+    <button mat-menu-item [routerLink]="[SECURE_HOME_ROUTE]">
+      <mat-icon>home</mat-icon><span>Home</span>
+    </button>
     @if (hasMultipleRoles()) {
     <button mat-menu-item (click)="onSwitchUser()">
       <mat-icon>switch_account</mat-icon><span>Switch Role</span></button

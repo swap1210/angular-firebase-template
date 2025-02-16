@@ -1,4 +1,7 @@
-import { TM_Role } from './user.interface';
+import { Type } from '@angular/core';
+import { App_Role } from './user.interface';
+import { TicketMasterComponent } from '../../secure-landing/support-user/ticket-master/ticket-master.component';
+import { UserManagerComponent } from '../../secure-landing/support-user/user-manager/user-manager.component';
 
 export const languagesMap: SelectFormFieldOption[] = [
   {
@@ -86,17 +89,17 @@ export const all_texts: AppStructure = {
     userRoles: [
       {
         icon: 'support_agent',
-        key: TM_Role.SUPPORT,
+        key: App_Role.SUPPORT,
         label: 'Support Agent',
       },
       {
         icon: 'content_cut',
-        key: TM_Role.SERVICE,
+        key: App_Role.SERVICE,
         label: 'Service User',
       },
       {
         icon: 'face_6',
-        key: TM_Role.CLIENT,
+        key: App_Role.CLIENT,
         label: 'Client User',
       },
     ],
@@ -105,21 +108,27 @@ export const all_texts: AppStructure = {
   },
 };
 
-export const supportRolePageText: SupportRolePageStructure = {
-  title1: 'Support User',
-  description: '',
-  tabs: [
-    {
-      icon: 'psychology_alt',
-      key: 'user-manager',
-      label: 'User Manager',
-    },
-    {
-      icon: 'support_agent',
-      key: 'ticket-master',
-      label: 'Ticket Master',
-    },
-  ],
+export const rolesTabPageText: Record<string, RolePageStructure> = {
+  [App_Role.SUPPORT]: {
+    title1: 'Support User',
+    description: '',
+    tabs: [
+      {
+        icon: 'psychology_alt',
+        key: 'user-manager',
+        label: 'User Manager',
+        component: UserManagerComponent,
+        data: {},
+      },
+      {
+        icon: 'support',
+        key: 'ticket-master',
+        label: 'Ticket Master',
+        component: TicketMasterComponent,
+        data: {},
+      },
+    ],
+  },
 };
 
 type Content = {
@@ -184,6 +193,11 @@ interface IconLabelButton extends Button {
   key: string;
 }
 
+export interface Tab extends IconLabelButton {
+  component: Type<any>;
+  data: Record<string, any>;
+}
+
 type FormField = {
   label: string;
   aria_label?: string;
@@ -226,7 +240,7 @@ type AppStructure = {
 };
 
 interface RolePageStructure extends PageStructure {
-  tabs: IconLabelButton[];
+  tabs: Tab[];
 }
 
 interface SupportRolePageStructure extends RolePageStructure {}

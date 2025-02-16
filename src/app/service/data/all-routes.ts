@@ -3,20 +3,20 @@ export const HOME_ROUTE = 'home';
 export const REGISTER_ROUTE = 'register';
 export const LOGIN_ROUTE = 'login';
 export const PROFILE_ROUTE = 'profile';
-export const SECURE_HOME_ROUTE = 'home';
+export const SECURE_HOME_ROUTE = 'my-home';
 export const SUPPORT_USER_ROUTE = 'support-user';
 export const SERVICE_USER_ROUTE = 'service-user';
 export const CLIENT_USER_ROUTE = 'client-user';
 
-export interface TM_Route {
+export interface App_Route {
   key: string;
   title: string;
   path: string;
   icon?: string;
-  subroutes: TM_Route[];
+  subroutes: App_Route[];
 }
 
-export const ALL_ROUTES: TM_Route[] = [
+export const ALL_ROUTES: App_Route[] = [
   {
     title: 'Home',
     path: HOME_ROUTE,
@@ -64,6 +64,6 @@ export const ALL_ROUTES: TM_Route[] = [
   },
 ];
 
-export const getRouteObjFromPath = (path: string): TM_Route | null => {
+export const getRouteObjFromPath = (path: string): App_Route | null => {
   return ALL_ROUTES.find((route) => route.path === path) || null;
 };

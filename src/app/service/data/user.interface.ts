@@ -3,14 +3,14 @@ export interface UserInterface {
   displayName: string;
 }
 
-export enum TM_Role {
+export enum App_Role {
   SUPPORT = 'support-user',
   SERVICE = 'service-user',
   CLIENT = 'client-user',
 }
 
-export function getRoleFromString(roleStr: string): TM_Role | undefined {
-  return Object.values(TM_Role).find((role) => role === roleStr);
+export function getRoleFromString(roleStr: string): App_Role | undefined {
+  return Object.values(App_Role).find((role) => role === roleStr);
 }
 
 export interface InputProfileDocumentInterface {
@@ -25,5 +25,5 @@ export interface ProfileDocumentInterface
   displayName: string | null;
   photoURL: string | null;
   email: string | null;
-  roles: TM_Role[];
+  roles: App_Role[];
 }
