@@ -11,12 +11,10 @@ export class UserAuthGuard implements CanActivate {
   authService = inject(AuthService);
 
   canActivate(): boolean {
-    console.log(
-      'UserAuthGuard#canActivate called ',
-      this.authService.isAuthenticatedSignal()
-    );
+    const isAuthenticated = this.authService.isAuthenticatedSignal();
+    console.log('UserAuthGuard#canActivate called ', isAuthenticated);
 
-    if (!this.authService.isAuthenticatedSignal()) {
+    if (!isAuthenticated) {
       this.router.navigate([LOGIN_ROUTE]);
       return false;
     }

@@ -58,6 +58,9 @@ export class HeaderComponent {
   PROFILE_ROUTE = PROFILE_ROUTE;
 
   onSwitchUser() {
+    if (this.hasMultipleRoles() === false) {
+      return;
+    }
     this._bottomSheet.open(SwitchUserBottomSheetComponent);
   }
   onLogout() {

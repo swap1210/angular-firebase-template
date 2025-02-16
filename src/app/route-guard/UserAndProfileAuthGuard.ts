@@ -13,12 +13,10 @@ export class UserAndProfileAuthGuard implements CanActivate {
   profileService = inject(ProfileService);
 
   canActivate(): boolean {
-    console.log(
-      'UserAndProfileAuthGuard#canActivate called ',
-      this.authService.isAuthenticatedSignal()
-    );
+    const isAuthenticated = this.authService.isAuthenticatedSignal();
+    console.log('UserAndProfileAuthGuard#canActivate called ');
 
-    if (!this.authService.isAuthenticatedSignal()) {
+    if (!isAuthenticated) {
       this.router.navigate([LOGIN_ROUTE]);
       return false;
     }

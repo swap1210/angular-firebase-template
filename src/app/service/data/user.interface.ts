@@ -1,5 +1,3 @@
-import { UserInfo } from '@angular/fire/auth';
-
 export interface UserInterface {
   email: string;
   displayName: string;

@@ -1,3 +1,5 @@
+import { TM_Role } from './user.interface';
+
 export const languagesMap: SelectFormFieldOption[] = [
   {
     value: 'en-US',
@@ -80,6 +82,27 @@ export const all_texts: AppStructure = {
       label: 'Language',
     },
   },
+  switchUserBottomSheet: {
+    userRoles: [
+      {
+        icon: 'support_agent',
+        key: TM_Role.SUPPORT,
+        label: 'Support Agent',
+      },
+      {
+        icon: 'content_cut',
+        key: TM_Role.SERVICE,
+        label: 'Service User',
+      },
+      {
+        icon: 'face_6',
+        key: TM_Role.CLIENT,
+        label: 'Client User',
+      },
+    ],
+    title1: '',
+    description: '',
+  },
 };
 
 type Content = {
@@ -139,6 +162,11 @@ type Button = {
   label: string;
 };
 
+interface IconLabelButton extends Button {
+  icon: string;
+  key: string;
+}
+
 type FormField = {
   label: string;
   aria_label?: string;
@@ -168,9 +196,14 @@ export interface ProfilePageStructure extends PageStructure {
   createProfileBtn: Button;
 }
 
+export interface SwitchUserBottomSheetStructure extends PageStructure {
+  userRoles: IconLabelButton[];
+}
+
 type AppStructure = {
   register: RegisterPageStructure;
   login: LoginPageStructure;
   profile: ProfilePageStructure;
   t_n_c: TNCPageStructure;
+  switchUserBottomSheet: SwitchUserBottomSheetStructure;
 };
