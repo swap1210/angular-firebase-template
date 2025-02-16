@@ -1,40 +1,29 @@
 import { inject, Injectable } from '@angular/core';
-import { CanActivate, Router } from '@angular/router';
+import { ActivatedRoute, CanActivate, Router } from '@angular/router';
 import { AuthService } from '../service/auth.service';
 import { LOGIN_ROUTE, PROFILE_ROUTE } from '../service/data/all-routes';
 import { ProfileService } from '../service/profile.service';
+import { toObservable } from '@angular/core/rxjs-interop';
+import { map } from 'rxjs/operators';
+import { Observable, of } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class UserAndProfileAuthGuard implements CanActivate {
   router = inject(Router);
-  authService = inject(AuthService);
   profileService = inject(ProfileService);
+  profileSignal$ = toObservable(this.profileService.profileSignal);
 
-  canActivate(): boolean {
-    const isAuthenticated = this.authService.isAuthenticatedSignal();
-    console.log('UserAndProfileAuthGuard#canActivate called ');
-
-    if (!isAuthenticated) {
-      this.router.navigate([LOGIN_ROUTE]);
-      return false;
-    }
-
-    const profile = this.profileService.profileSignal();
-
-    if (!profile) {
-      this.router.navigate([PROFILE_ROUTE]);
-      return false;
-    }
-
-    return true;
-
-    // if (this.authService.isAuthenticatedSignal()) {
-    //   return true; // Allow navigation
-    // } else {
-    //   this.router.navigate([LOGIN_ROUTE]); // Redirect to login page
-    //   return false; // Block navigation
-    // }
+  canActivate(): Observable<boolean> {
+    return this.profileSignal$.pipe(
+      map((profile) => {
+        if (!profile) {
+          this.router.navigate([PROFILE_ROUTE]);
+          return false;
+        }
+        return true;
+      })
+    );
   }
 }
