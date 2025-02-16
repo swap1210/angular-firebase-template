@@ -44,7 +44,9 @@ export class HeaderComponent {
   authService = inject(AuthService);
   profileService = inject(ProfileService);
   hasMultipleRoles: Signal<boolean> = computed(() => {
-    return this.profileService.roleRouteSignal().length > 1;
+    if (this.profileService.roleRouteSignal())
+      return this.profileService.roleRouteSignal().length > 1;
+    else return false;
   });
   private _bottomSheet = inject(MatBottomSheet);
 

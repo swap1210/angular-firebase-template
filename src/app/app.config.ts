@@ -20,15 +20,7 @@ import {
   provideFirestore,
 } from '@angular/fire/firestore';
 
-const firebaseConfig = {
-  apiKey: '<firebase-apiKey>',
-  authDomain: '<firebase-authDomain>',
-  projectId: '<firebase-projectId>',
-  storageBucket: '<firebase-storageBucket>',
-  messagingSenderId: '<firebase-messagingSenderId>',
-  appId: '<firebase-appId>',
-  measurementId: '<firebase-measurementId>',
-};
+const firebaseConfig = environment.firebaseConfig;
 export const appConfig: ApplicationConfig = {
   providers: [
     provideZoneChangeDetection({ eventCoalescing: true }),

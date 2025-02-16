@@ -105,6 +105,23 @@ export const all_texts: AppStructure = {
   },
 };
 
+export const supportRolePageText: SupportRolePageStructure = {
+  title1: 'Support User',
+  description: '',
+  tabs: [
+    {
+      icon: 'psychology_alt',
+      key: 'user-manager',
+      label: 'User Manager',
+    },
+    {
+      icon: 'support_agent',
+      key: 'ticket-master',
+      label: 'Ticket Master',
+    },
+  ],
+};
+
 type Content = {
   title1: string;
   title2?: string;
@@ -207,3 +224,9 @@ type AppStructure = {
   t_n_c: TNCPageStructure;
   switchUserBottomSheet: SwitchUserBottomSheetStructure;
 };
+
+interface RolePageStructure extends PageStructure {
+  tabs: IconLabelButton[];
+}
+
+interface SupportRolePageStructure extends RolePageStructure {}

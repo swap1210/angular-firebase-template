@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, Output } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { CommonService } from '../service/common.service';
@@ -21,4 +21,8 @@ export class ProfileComponent {
   profileService = inject(ProfileService);
   pageText = this.commonService.all_texts.profile;
   editMode: boolean = false;
+
+  toggleEditMode = () => {
+    this.editMode = !this.editMode;
+  };
 }

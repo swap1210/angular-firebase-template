@@ -1,4 +1,11 @@
-import { Component, inject, Input, OnInit } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  inject,
+  Input,
+  OnInit,
+  Output,
+} from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -9,6 +16,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Firestore } from '@angular/fire/firestore';
 import { ProfileService } from '../../service/profile.service';
 import { ProfilePageStructure } from '../../service/data/all-texts';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-profile-edit',
@@ -30,6 +38,11 @@ export class ProfileEditComponent implements OnInit {
   profileForm: FormGroup = new FormGroup({});
   @Input()
   pageText!: ProfilePageStructure;
+  @Output()
+  toggleEditMode = new EventEmitter<void>();
+  initialFormValues: any = {};
+  isFormChanged: boolean = false;
+  formSubscription!: Subscription;
 
   ngOnInit(): void {
     const defaultProfileValue = this.profileService.profileSignal() ?? {
@@ -48,9 +61,34 @@ export class ProfileEditComponent implements OnInit {
         Validators.required,
       ]),
     });
+
+    // Store initial values
+    this.initialFormValues = this.profileForm.getRawValue();
+
+    // Subscribe to form changes
+    this.formSubscription = this.profileForm.valueChanges.subscribe(() => {
+      this.isFormChanged = !this.isSameAsInitial();
+    });
+  }
+
+  isSameAsInitial(): boolean {
+    return (
+      JSON.stringify(this.profileForm.getRawValue()) ===
+      JSON.stringify(this.initialFormValues)
+    );
   }
 
   createProfile = async () => {
-    this.profileService.createProfileDocument(this.profileForm.getRawValue());
+    this.profileService
+      .createProfileDocument(this.profileForm.getRawValue())
+      .then(() => {
+        this.toggleEditMode.emit();
+      });
   };
+
+  ngOnDestroy(): void {
+    if (this.formSubscription) {
+      this.formSubscription.unsubscribe();
+    }
+  }
 }
