@@ -20,15 +20,7 @@ import {
   provideFirestore,
 } from '@angular/fire/firestore';
 
-const firebaseConfig = {
-  apiKey: 'AIzaSyCZnQdnzjjnG7emkxq-lF-xFZYRfhltn_E',
-  authDomain: 'termin4me-ui.firebaseapp.com',
-  projectId: 'termin4me-ui',
-  storageBucket: 'termin4me-ui.firebasestorage.app',
-  messagingSenderId: '349950041939',
-  appId: '1:349950041939:web:90f3ee87ffcdc898250ba6',
-  measurementId: 'G-JSPDDPQHR8',
-};
+const firebaseConfig = environment.firebaseConfig;
 export const appConfig: ApplicationConfig = {
   providers: [
     provideZoneChangeDetection({ eventCoalescing: true }),
