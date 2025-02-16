@@ -10,7 +10,9 @@ import {
   DocumentReference,
   Firestore,
   getDoc,
+  onSnapshot,
   setDoc,
+  Unsubscribe,
 } from '@angular/fire/firestore';
 import { AuthService } from './auth.service';
 import { toObservable } from '@angular/core/rxjs-interop';
@@ -30,22 +32,32 @@ export class ProfileService {
       return [];
     }
   });
+  profileUnsubscribe: Unsubscribe | null = null;
 
   constructor() {
     this.firebaseUser$.subscribe(async (user) => {
       console.log('firebaseUser$ received: ', user);
       if (user) {
         const profileRef = this.returnProfileDocumentReference(user.uid);
-        const profileSnap = await getDoc(profileRef);
-        if (profileSnap.exists()) {
-          this.profileSignal.set(
-            profileSnap.data() as ProfileDocumentInterface
-          );
-        } else {
-          this.profileSignal.set(null);
-        }
+        // Subscribe to real-time updates
+        const unsubscribe = onSnapshot(profileRef, (profileSnap) => {
+          if (profileSnap.exists()) {
+            this.profileSignal.set(
+              profileSnap.data() as ProfileDocumentInterface
+            );
+          } else {
+            this.profileSignal.set(null);
+          }
+        });
+
+        // Store unsubscribe function if needed (e.g., for cleanup)
+        this.profileUnsubscribe = unsubscribe;
       } else {
         this.profileSignal.set(null);
+        if (this.profileUnsubscribe) {
+          this.profileUnsubscribe(); // Unsubscribe if user logs out
+          this.profileUnsubscribe = null;
+        }
       }
     });
   }

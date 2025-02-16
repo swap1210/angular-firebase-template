@@ -21,13 +21,13 @@ import {
 } from '@angular/fire/firestore';
 
 const firebaseConfig = {
-  apiKey: '<firebase-apiKey>',
-  authDomain: '<firebase-authDomain>',
-  projectId: '<firebase-projectId>',
-  storageBucket: '<firebase-storageBucket>',
-  messagingSenderId: '<firebase-messagingSenderId>',
-  appId: '<firebase-appId>',
-  measurementId: '<firebase-measurementId>',
+  apiKey: 'AIzaSyCZnQdnzjjnG7emkxq-lF-xFZYRfhltn_E',
+  authDomain: 'termin4me-ui.firebaseapp.com',
+  projectId: 'termin4me-ui',
+  storageBucket: 'termin4me-ui.firebasestorage.app',
+  messagingSenderId: '349950041939',
+  appId: '1:349950041939:web:90f3ee87ffcdc898250ba6',
+  measurementId: 'G-JSPDDPQHR8',
 };
 export const appConfig: ApplicationConfig = {
   providers: [

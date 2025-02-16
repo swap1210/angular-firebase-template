@@ -47,6 +47,6 @@
     mat-flat-button
     (click)="createProfile()"
     [innerText]="pageText.createProfileBtn.label"
-    [disabled]="!this.profileForm.valid"
+    [disabled]="!this.profileForm.valid || !isFormChanged"
   ></button>
 </form>

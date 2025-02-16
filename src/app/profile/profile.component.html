@@ -1,13 +1,16 @@
 <div class="flex-left-to-right">
   <h2 [innerText]="pageText.title1"></h2>
   <span class="flex-spacer"></span>
-  <button mat-mini-fab (click)="editMode = !editMode">
+  <button mat-mini-fab (click)="toggleEditMode()">
     <mat-icon [innerText]="editMode ? 'close' : 'edit'"></mat-icon>
   </button>
 </div>
 
-@if(editMode){
-<app-profile-edit [pageText]="pageText"></app-profile-edit>
+@if(editMode || !profileService.profileSignal()){
+<app-profile-edit
+  [pageText]="pageText"
+  (toggleEditMode)="toggleEditMode()"
+></app-profile-edit>
 }@else {
 <app-profile-readonly
   [pageText]="pageText"
