@@ -108,29 +108,6 @@ export const all_texts: AppStructure = {
   },
 };
 
-export const rolesTabPageText: Record<string, RolePageStructure> = {
-  [App_Role.SUPPORT]: {
-    title1: 'Support User',
-    description: '',
-    tabs: [
-      {
-        icon: 'psychology_alt',
-        key: 'user-manager',
-        label: 'User Manager',
-        component: UserManagerComponent,
-        data: {},
-      },
-      {
-        icon: 'support',
-        key: 'ticket-master',
-        label: 'Ticket Master',
-        component: TicketMasterComponent,
-        data: {},
-      },
-    ],
-  },
-};
-
 type Content = {
   title1: string;
   title2?: string;
@@ -193,11 +170,6 @@ interface IconLabelButton extends Button {
   key: string;
 }
 
-export interface Tab extends IconLabelButton {
-  component: Type<any>;
-  data: Record<string, any>;
-}
-
 type FormField = {
   label: string;
   aria_label?: string;
@@ -238,9 +210,3 @@ type AppStructure = {
   t_n_c: TNCPageStructure;
   switchUserBottomSheet: SwitchUserBottomSheetStructure;
 };
-
-interface RolePageStructure extends PageStructure {
-  tabs: Tab[];
-}
-
-interface SupportRolePageStructure extends RolePageStructure {}

@@ -7,7 +7,6 @@ import { MatIconModule } from '@angular/material/icon';
 import { ProfileService } from '../../service/profile.service';
 import { CommonService } from '../../service/common.service';
 import { getRoleFromString } from '../../service/data/user.interface';
-import { SecureLandingService } from '../../service/secure-landing.service';
 
 @Component({
   selector: 'app-switch-user-bottom-sheet',
@@ -16,10 +15,9 @@ import { SecureLandingService } from '../../service/secure-landing.service';
   styleUrl: './switch-user-bottom-sheet.component.scss',
 })
 export class SwitchUserBottomSheetComponent {
-  // private router = inject(Router);
+  private router = inject(Router);
   profileService = inject(ProfileService);
   commonService = inject(CommonService);
-  secureLandingService = inject(SecureLandingService);
   pageText = this.commonService.all_texts.switchUserBottomSheet;
   userRoles = computed(() => {
     return this.pageText.userRoles.filter((currentRole) => {
@@ -35,7 +33,7 @@ export class SwitchUserBottomSheetComponent {
       MatBottomSheetRef
     );
   navigateTo(event: MouseEvent, routePath: string): void {
-    this.secureLandingService.currentRole.set(getRoleFromString(routePath));
+    this.router.navigate([routePath]);
     this._bottomSheetRef.dismiss();
     event.preventDefault();
   }

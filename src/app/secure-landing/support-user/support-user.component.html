@@ -1,1 +1,14 @@
-<p>support-user works!</p>
+<mat-tab-group animationDuration="0ms" headerPosition="below">
+  <mat-tab>
+    <ng-template mat-tab-label>
+      <mat-icon>psychology_alt</mat-icon>User Manager
+    </ng-template>
+    <app-user-manager></app-user-manager>
+  </mat-tab>
+  <mat-tab>
+    <ng-template mat-tab-label>
+      <mat-icon>support</mat-icon>Ticket Master
+    </ng-template>
+    <app-ticket-master></app-ticket-master>
+  </mat-tab>
+</mat-tab-group>
